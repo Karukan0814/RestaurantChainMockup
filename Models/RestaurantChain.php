@@ -1,6 +1,7 @@
 <?php
 
 use Interfaces\FileConvertible;
+use Models\Company;
 use Models\RestaurantLocation;
 
 class RestaurantChain extends Company
@@ -21,17 +22,18 @@ class RestaurantChain extends Company
 
 
     public function __construct(
-        string $name,
-        int $foundingYear,
-        string $description,
-        string $website,
-        string $phone,
-        string $industry,
-        string $ceo,
-        bool $isPubliclyTraded,
-        string $country,
-        string $founder,
-        int $totalEmployees,
+        // string $name,
+        // int $foundingYear,
+        // string $description,
+        // string $website,
+        // string $phone,
+        // string $industry,
+        // string $ceo,
+        // bool $isPubliclyTraded,
+        // string $country,
+        // string $founder,
+        // int $totalEmployees,
+        Company $parentCompany,
 
         int $chainID,
         array $restaurantLocations,
@@ -39,22 +41,24 @@ class RestaurantChain extends Company
         int $numberOfLocations,
         int  $isDriveThrough,
         int  $chainFoundingYear,
-        string $parentCompany,
+        // string $parentCompany,
 
     ) {
-        parent::__construct(
 
-            $name,
-            $foundingYear,
-            $description,
-            $website,
-            $phone,
-            $industry,
-            $ceo,
-            $isPubliclyTraded,
-            $country,
-            $founder,
-            $totalEmployees
+        $parentCompanyInfo=$parentCompany->toArray();
+        parent::__construct(
+            $parentCompanyInfo["name"],
+            $parentCompanyInfo["foundingYear"],
+            $parentCompanyInfo["description"],
+            $parentCompanyInfo["website"],
+            $parentCompanyInfo["phone"],
+            $parentCompanyInfo["industry"],
+            $parentCompanyInfo["ceo"],
+            $parentCompanyInfo["isPubliclyTraded"],
+            $parentCompanyInfo["country"],
+            $parentCompanyInfo["founder"],
+            $parentCompanyInfo["totalEmployees"],
+
         );
         $this->chainID = $chainID;
         $this->restaurantLocations = $restaurantLocations;
@@ -62,7 +66,7 @@ class RestaurantChain extends Company
         $this->numberOfLocations = $numberOfLocations;
         $this->isDriveThrough = $isDriveThrough;
         $this->chainFoundingYear = $chainFoundingYear;
-        $this->parentCompany = $parentCompany;
+        $this->parentCompany = $parentCompanyInfo["name"];
 
 
         $locationNames = array_map(function ($location) {
