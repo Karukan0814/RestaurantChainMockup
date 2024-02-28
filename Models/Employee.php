@@ -1,5 +1,7 @@
 <?php
+namespace Models;
 
+use DateTime;
 use Interfaces\FileConvertible;
 use Models\User;
 

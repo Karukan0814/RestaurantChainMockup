@@ -1,10 +1,12 @@
 <?php
 
+namespace Models;
+
 use Interfaces\FileConvertible;
 use Models\Company;
 use Models\RestaurantLocation;
 
-class RestaurantChain extends Company
+class RestaurantChain extends Company  implements FileConvertible
 {
 
 
@@ -45,7 +47,7 @@ class RestaurantChain extends Company
 
     ) {
 
-        $parentCompanyInfo=$parentCompany->toArray();
+        $parentCompanyInfo = $parentCompany->toArray();
         parent::__construct(
             $parentCompanyInfo["name"],
             $parentCompanyInfo["foundingYear"],
@@ -68,16 +70,16 @@ class RestaurantChain extends Company
         $this->chainFoundingYear = $chainFoundingYear;
         $this->parentCompany = $parentCompanyInfo["name"];
 
-
         $locationNames = array_map(function ($location) {
-            return $location->name;
+            $propertyMap = $location->toArray();
+            return $propertyMap["name"];
         }, $this->restaurantLocations);
         $locationNamesString = implode(', ', $locationNames);
         $this->locationNamesString = $locationNamesString;
     }
 
 
-   
+
 
 
     public function toString(): string
@@ -103,24 +105,28 @@ class RestaurantChain extends Company
     public function toHTML()
     {
         $parentHTML = parent::toHTML();
-        return $parentHTML . sprintf(
-            "
-            <p>chainID: %d</p>
-            <p>Location List: %s</p>
-            <p>Cuisine Type: %s</p>
-            <p>Number of Locations: %d</p>
-            <p>isDriveThrough: %s</p>
-            <p>chainFoundingYear: %d</p>
-            <p>parentCompany: %s</p>  
-            ",
-            $this->chainID,
-            $this->locationNamesString,
-            $this->cuisineType,
-            $this->numberOfLocations,
-            $this->isDriveThrough ? "True" : "False",
-            $this->chainFoundingYear,
-            $this->parentCompany,
-        );
+        return
+
+            $parentHTML . sprintf(
+                "
+            <div class='company-card'>
+                <p>chainID: %d</p>
+                <p>Location List: %s</p>
+                <p>Cuisine Type: %s</p>
+                <p>Number of Locations: %d</p>
+                <p>isDriveThrough: %s</p>
+                <p>chainFoundingYear: %d</p>
+                <p>parentCompany: %s</p>  
+
+            </div>",
+                $this->chainID,
+                $this->locationNamesString,
+                $this->cuisineType,
+                $this->numberOfLocations,
+                $this->isDriveThrough ? "True" : "False",
+                $this->chainFoundingYear,
+                $this->parentCompany,
+            );
     }
 
     public function toMarkdown()
@@ -163,8 +169,8 @@ class RestaurantChain extends Company
     }
 
     // チェーンに新しいレストランの場所を追加するメソッド
-    public function addNewLocation(RestaurantLocation $newLocation){
-        $this->restaurantLocations[]=$newLocation;
+    public function addNewLocation(RestaurantLocation $newLocation)
+    {
+        $this->restaurantLocations[] = $newLocation;
     }
-
 }

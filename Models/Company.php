@@ -1,5 +1,6 @@
 <?php
 
+namespace Models;
 use Interfaces\FileConvertible;
 
 
@@ -49,6 +50,51 @@ class Company implements FileConvertible{
 
     }
 
+
+    
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getFoundingYear(): int {
+        return $this->foundingYear;
+    }
+
+    public function getDescription(): string {
+        return $this->description;
+    }
+
+    public function getWebsite(): string {
+        return $this->website;
+    }
+
+    public function getPhone(): string {
+        return $this->phone;
+    }
+
+    public function getIndustry(): string {
+        return $this->industry;
+    }
+
+    public function getCeo(): string {
+        return $this->ceo;
+    }
+
+    public function isPubliclyTraded(): bool {
+        return $this->isPubliclyTraded;
+    }
+
+    public function getCountry(): string {
+        return $this->country;
+    }
+
+    public function getFounder(): string {
+        return $this->founder;
+    }
+
+    public function getTotalEmployees(): int {
+        return $this->totalEmployees;
+    }
 
 
 
