@@ -59,19 +59,33 @@ class RestaurantLocation implements FileConvertible
         );
     }
 
+
+    public function getEmployeeHTML(): string
+    {
+        return implode(
+            ' ',
+            array_map(function (Employee $rl) {
+                return  sprintf(
+                    "<li>{$rl->toHTML()}</li>");
+            }, $this->employees));
+    }
+
     public function toHTML()
     {
         return sprintf(
             "
-            <div class='user-card'>
-                <div class='avatar'>SAMPLE</div>
-                <h2>%s %s</h2>
-                <p>%s</p>
-                <p>%s</p>
-                <p>%s</p>
-                <p>Zip Code: %s</p>
-                <p>IsOpen: %s</p>
-            </div>",
+            <ul class='location-card'>
+                <h3>LocationName: %s</h3>
+                <li>%s, %s, %s</li>
+                <li>Zip Code: %s</li>
+                <li>IsOpen: %s</li>
+                <li>Employees
+                
+                <ol>
+                {$this->getEmployeeHTML()}
+                </ol>
+                </li>
+            </ul>",
             $this->name,
             $this->address,
             $this->city,

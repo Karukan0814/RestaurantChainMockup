@@ -102,30 +102,47 @@ class RestaurantChain extends Company  implements FileConvertible
         );
     }
 
+
+    public function getRestaurantLocationHTML(): string
+    {
+        return implode(
+            ' ',
+            array_map(function (RestaurantLocation $rl) {
+                return  sprintf(
+                    "<li>{$rl->toHTML()}</li>");
+            }, $this->restaurantLocations));
+    }
     public function toHTML()
     {
-        $parentHTML = parent::toHTML();
+        // $parentHTML = parent::toHTML();
+
         return
 
-            $parentHTML . sprintf(
+            sprintf(
                 "
             <div class='company-card'>
-                <p>chainID: %d</p>
-                <p>Location List: %s</p>
-                <p>Cuisine Type: %s</p>
-                <p>Number of Locations: %d</p>
-                <p>isDriveThrough: %s</p>
-                <p>chainFoundingYear: %d</p>
-                <p>parentCompany: %s</p>  
+            <h2>%s</h2>
+            <ul>
+            <li>Cuisine Type: %s</li>
+            <li>Number of Locations: %d</li>
+            <li>isDriveThrough: %s</li>
+            <li>chainFoundingYear: %d</li>
+            <li>
+            Locations
+            <ol>
+            {$this->getRestaurantLocationHTML()}
+            </ol>
+            </li>
+            </ul>
+ 
 
             </div>",
-                $this->chainID,
-                $this->locationNamesString,
+                $this->parentCompany,
+                // $this->chainID,
                 $this->cuisineType,
                 $this->numberOfLocations,
                 $this->isDriveThrough ? "True" : "False",
                 $this->chainFoundingYear,
-                $this->parentCompany,
             );
     }
 

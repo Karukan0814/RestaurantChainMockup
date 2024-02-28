@@ -48,13 +48,18 @@ class Employee extends User{
     }
 
     public function toHTML() {
-        $parentHTML = parent::toHTML();
-        return $parentHTML . sprintf("
-            <p>Position: %s</p>
-            <p>Salary: %.2f</p>
-            <p>Start Date: %s</p>
-            <p>Awards: %s</p>",
-            $this->position,
+        // $parentHTML = parent::toHTML();
+        $parentProperties=parent::toArray();
+        return sprintf("
+        <ul>
+        <h4> %s</h4>
+        <li>Position: %s</li>
+        <li>Salary: %.2f</li>
+        <li>Start Date: %s</li>
+        <li>Awards: %s</li>
+        </ul>",
+        $parentProperties["firstName"]." ".$parentProperties["lastName"],
+        $this->position,
             $this->salary,
             $this->startDate->format('Y-m-d'),
             implode(', ', $this->awardList)

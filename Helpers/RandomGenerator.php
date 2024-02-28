@@ -192,17 +192,18 @@ class RandomGenerator
         );
     }
 
-    public static function restaurantChains(int $min, int $max,Company $company): array
+    public static function restaurantChains(int $min, int $max): array
     {
         $faker = Factory::create();
         $chains = [];
 
-        // $comnpanies = self::companies(1, 3);
-
+        
+        
         $numOfChains = $faker->numberBetween($min, $max);
-
+        
         for ($i = 0; $i < $numOfChains; $i++) {
-            $chains[] = self::restaurantChain($company);
+            $company = self::company();//会社の生成
+            $chains[] = self::restaurantChain($company);//チェーンの生成
         }
 
         return $chains;
