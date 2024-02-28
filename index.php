@@ -24,7 +24,7 @@ $max = (int)$max;
 // ユーザーの生成
 // $users = RandomGenerator::users($min, $max);
 
-
+//test
 
 // レストランチェーンの生成
 
